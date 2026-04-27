@@ -1,6 +1,7 @@
 1. Write a C program that accepts the vertices and edges of a graph.
 Create and display adjacency list also print indegree, outdegree and
 total degree of all vertex of graph.
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -126,12 +127,6 @@ void main()
     dislist(adj_list, n);
     inout_degree(adj_list, n);
 }
-
-
-
-
-
-
 
 
 Q1) Write a C program that accepts the vertices and edges of a graph 
@@ -1146,7 +1141,26 @@ int main()
 
 
 ----------------------------------------------------- SLIP  - 1 ------------------------------------------------------------------ 
-Create Database 
+Section II: Database Management Systems-II      
+Consider the following Entities and their Relationships for Project-Employee database. 
+Project (pno integer, pname char (30), ptype char (20), duration integer) 
+Employee (eno integer, ename char (20), qualification char (15), joining_date date) 
+[15 Marks] 
+The Relationship between Project and Employee is many to many with descriptive attribute 
+start_date date, no_of_hours_worked integer. 
+Constraints: Primary Key, duration should be greater than zero, pname should not be null. 
+Q2) Using above Database Solve the following 
+[10 Marks] 
+1) Write a stored function to accept eno as input parameter and count number of projects on 
+which that employee is working. 
+OR 
+1) Write a trigger before inserting into a project table to check duration should be always greater 
+than zero. Display appropriate message 
+2) Write a procedure to accept three numbers from user and display addition, subtraction and 
+multiplication of three numbers. 
+[
+
+
 create table pro1(pno int primary key,pname varchar(30) not null,ptype varchar(20),duration int, check(duration > 0)); 
 create table emp1(eno int primary key,ename varchar(20),qualification varchar(15),joinig_date date); 
 create table pro_emp1(pno int,eno int,start_date date,no_of_hours_worked int,foreign key(pno) references pro1(pno),foreign key(eno) references emp1(eno)); 
@@ -1155,7 +1169,9 @@ select * from pro1;
 insert into emp1 values(101,'amit','Bsc','2022-06-10'),(102,'neha','Msc','2021-08-15'),(103,'rahul','Bca','2023-01-05'); 
 select * from emp1; 
 insert into pro_emp1 values(1,101,'2024-01-10',120),(2,101,'2024-02-05',90),(3,101,'2024-03-01',110),(1,103,'2024-02-15',80); 
-select * from pro_emp1; ------------------- Trigger -----------------------------------  
+select * from pro_emp1;
+
+ ------------------- Trigger -----------------------------------  
 create or replace function check_duration() returns trigger as $$ 
 begin 
 if NEW.duration <=0 then 
@@ -1164,11 +1180,13 @@ end if;
 return NEW; 
 end; 
 $$ language plpgsql; 
+
 create trigger duration_check 
 before insert on pro1 
 for each row 
 execute function check_duration(); 
-insert into pro1 values(4,'test','software',0); ---------------------- Q2 ------------------------------------------- 
+insert into pro1 values(4,'test','software',0); 
+---------------------- Q2 ------------------------------------------- 
 create or replace procedure arithmetic_op(a int,b int,c int) language plpgsql as $$ 
 begin 
 raise notice 'Addition = %',a+b+c; 
@@ -1179,7 +1197,24 @@ $$;
 call arithmetic_op(5,3,2); 
 
 ----------------------------------------------------- SLIP  - 2 ------------------------------------------------------------------ 
-Q1):- 
+Q1):- Section II: Database Management Systems-II      
+Consider the following Entities and their Relationships 
+Person (pno integer, pname varchar (20), birthdate date, income money) 
+Area (aname varchar (20), area_type varchar (5)) 
+[15 Marks] 
+An area can have one or more persons living in it, but a person belongs to exactly one area. 
+Constraints: Primary Key,area_type can be either ‘urban’ or ‘rural’. 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1) Write a stored function to print total number of persons of a particular area. Accept area name as 
+input parameter. 
+OR 
+1) Write a stored function to print sum of income of person living in “ ” area type. (Accept area type 
+as input parameter). Display appropriate message for invalid area type. 
+2) Write a procedure to accept two numbers from user and display division of two numbers. Use 
+raise to display error messages for division by zero error. 
+
+
 
 create table area2(aname varchar(20) primary key,area_type varchar(5)); 
 create table person2(pno int primary key,pname varchar(20),birthdate date,income money,aname varchar(20),foreign key(aname) references area2(aname)); 
@@ -1213,7 +1248,25 @@ call divide_num(10,2);
 call divide_num(5,0); 
 
 ----------------------------------------------------- SLIP  - 3 ------------------------------------------------------------------ 
-Q1]  
+Q1]Section II: Database Management Systems-II      
+Consider the following Entities and their Relationship. 
+Student (s_no integer, s_name char (20), address char (25), class char (10)) 
+Teacher (t_no integer,t_name char (10), qualification char (10),experience integer) 
+[15 Marks] 
+Relationship between Student and Teacher is Many to Many with descriptive attribute subject 
+and marks_scored. 
+Constraints: Primary Key,s_name,t_name should not be null,marks_scored> 0 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1) Write a cursor which will accept student number from the user and display student name along 
+with teacher name who taught ‘RDBMS’ subject. 
+OR 
+1) Write a trigger before insert the record of student. If student number is less than or equal to zero  
+give message “Invalid Number”. 
+2) Write a procedure accept two numbers from user and display minimum and maximum from 
+two numbers.       
+
+
 create table stud3(s_no int primary key,s_name varchar(20) not null,address varchar(30),class varchar(10)); 
 create table tea3(t_no int primary key,t_name varchar(20) not null,qualification varchar(15),experience int); 
 create table stud_tea3(s_no int,t_no int,subject varchar(15),marks_scored int,check (marks_scored > 0),primary key(s_no,t_no),foreign key(t_no) references 
@@ -1251,7 +1304,26 @@ call find_min_max(2,10);
 
 
 ----------------------------------------------------- SLIP  - 4------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems-II      
+Consider the following Entities and their Relationships . 
+[15 Marks] 
+Movies (m_name varchar (25), release_year integer, budget money) 
+Actor (a_name char (30), role char (30), charges money, a_address varchar(30)) 
+Producer (producer_id integer, name char (30), p_address varchar (30)) 
+The relationships are as follows: 
+Each actor has acted in one or more movies. Each producer has produced many movies 
+and each movie can be produced by more than one producers. Each movie has one or 
+more actors acting in it, in different roles. 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1) Write a cursor to pass actor name as input parameter and return total number of movies in 
+which given actor is acting. 
+OR 
+1) Write a trigger before inserting into movie table to check budget. Budget should be 
+minimum 50 lakh. Display appropriate message. 
+2) Write a procedure to accept a number from user and check the number is positive, negative 
+or zero.  
+
 create table movies4(m_name varchar(20) primary key,release_yr int,budget money); 
 create table actor4(a_name varchar(30) primary key ,role varchar(20),charges money,a_address varchar(30)); 
 create table producer4(producer_id int primary key, name varchar(20),p_address varchar(30)); 
@@ -1292,7 +1364,25 @@ $$;
 call check_num(5);
 
 ----------------------------------------------------- SLIP  - 05 ------------------------------------------------------------------ 
-Q1]  
+Q1]Section II: Database Management Systems-II      
+[15 Marks] 
+Consider the following Entities and their Relationships for Student-Competition 
+Student (sreg_no int ,s_name varchar(20), s_class char(10)) 
+Competition (c_no int ,c_name varchar(20), c_type char(10)) 
+Relationship between Student and Competition is many to many with descriptive 
+attributes rank and year. 
+Constraints: Primary Key, c_type should not be null, c_type can be ‘sport’ or 
+‘academic’. 
+Q2) Using above Database Solve the following  
+1. write a function using cursor to accept year and class to display student name, 
+competition name and rank. 
+OR 
+1. Define a trigger before updating a competition table. Raise a notice and 
+display message “competition record is being updated”. 
+[10 Marks] 
+2. Write a procedure to accept three numbers from user and find maximum and minimum 
+from it.      
+
 create table stude5(sreg_no int primary key,s_name varchar(30),s_class varchar(10)); 
 create table compe5(c_no int primary key,c_name varchar(20),c_type varchar(15)); 
 create table stud_comp5(sreg_no int,c_no int,rank int,year int,primary key(sreg_no,c_no),foreign key(sreg_no) references stude5(sreg_no),foreign key(c_no) 
@@ -1347,7 +1437,29 @@ call find_max(4,30,33);
 
 
 ----------------------------------------------------- SLIP  - 06 ------------------------------------------------------------------ 
-Q1]  
+Q1]Section II: Database Management Systems II      
+Consider the following Entities and their Relationships 
+BUS (bus_no int , capacity int , depot_name varchar(20)) 
+[15 Marks] 
+ROUTE (route_no int, source char(20), destination char(20),no_of_stations int) 
+DRIVER (driver_no int , driver_name char(20), license_no int, address char(20), 
+d_ageint , salary float) 
+The relationships are as: BUS_ROUTE: M-1 
+BUS_DRIVER: M-M with descriptive attributes Date of duty allotted and Shift itcan 
+be 1 (Morning) or 2 (Evening). 
+Constraints: 1. License_no is unique. 
+2. Bus capacity is not null 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1. Write a stored function to accept the bus number and print driver name allotted to that 
+bus. 
+OR 
+1. Write a stored function to accept depot name and display driver details having age 
+more than 50. 
+2. Write a procedure that accept any number from user and find number is even or odd.  
+
+
+
 create table route6(route_no int primary key,source varchar(20),dest varchar(20),no_of_stations int); 
 create table bus6(bus_no int primary key,capacity int,depot_name varchar(20),route_no int,foreign key(route_no) references route6(route_no)); 
 create table driver6(driver_no int primary key,d_name varchar(20),license_no int,address varchar(15),d_age int,salary float); 
@@ -1389,7 +1501,26 @@ call even_odd(225);
 
 
  ----------------------------------------------------- SLIP  - 07 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following Entities and their Relationships 
+Branch (br_id integer, br_name char (30), br_city char (10)) 
+[15 Marks] 
+Customer (cno integer, c_name char (20), caddr char (35), city char (20)) 
+Loan_application(lno integer, l_amt_required money, l_amt_approved money, l_date 
+date) 
+Relationship between Branch, Customer and Loan_application is Ternary. 
+Ternary (br_id integer, cno integer, lno integer) Constraints: Primary Key, 
+l_amt_required should be greater than zero. 
+Q2) Using above Database Solve the following  
+1. Write a stored function using cursor to count the number of customers of 
+particular branch. (Accept branch name as input parameter). 
+OR 
+[10 Marks] 
+1. Write a trigger before insert record of customer. If the customer number is less than or 
+equal to zero, then give the appropriate message. 
+2. Write a procedure to accept value of n and display sum of first n numbers.
+
+
 create table branch7(br_id int primary key,br_name varchar(20),br_city varchar(20)); 
 create table cust7(cno int primary key,c_name varchar(10),caddre varchar(20),city varchar(15)); 
 create table loan_app7(lno int primary key,l_amt_required money,l_amt_approved money,l_date date); 
@@ -1431,7 +1562,29 @@ call sum_20_num();
 
 
 ----------------------------------------------------- SLIP  - 08 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following Entities and their Relationships 
+[15 Marks] 
+TRAIN: (train_no int, train_name varchar(20), depart_time time , arrival_time time, 
+source_stn varchar (20),dest_stn varchar (20), no_of_res_bogies int ,bogie_capacity int) 
+PASSENGER : (passenger_id int, passenger_name varchar(20), address varchar(30), 
+age int ,gender char) 
+Relationships: 
+Train _Passenger: M-M relationship named ticket with descriptive attributes as follows 
+TICKET: ( train_no int, passenger_id int, ticket_no int ,bogie_no int, no_of_berths int 
+,tdate date , ticket_amt decimal(7,2),status char) 
+Constraints:The status of a berth can be 'W' (waiting) or 'C' (confirmed). 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1. Write a stored function to display the ticket details of a train. (Accept train name as 
+input parameter). Raise an exception in case of invalid train name. 
+OR 
+1.Write a trigger after insert on passenger to display message “Age above 5 will be charged 
+full fare” if age of passenger is more than 5. 
+2. Write a procedure that accept two numbers and display addition, subtraction and multiplication of 
+two numbers.      
+
+
 create table train8(train_no int primary key,train_name varchar(50),depart_time time,arrival_time time,source_stn varchar(20),dest_stn 
 varchar(20),no_of_res_bogies int,bogie_capacity int); 
 create table pass8(pass_id int primary key,pass_name varchar(15),address varchar(20),age int,gender varchar(15)); 
@@ -1464,7 +1617,23 @@ call add_2_num(5,4);
 
 
 ----------------------------------------------------- SLIP  - 10 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following Entities and their Relationships 
+[15 Marks] 
+Book(b_no int, b_name varchar (20), pub_name varchar (10), b_price float) 
+Author (a_no int, a_name varchar (20), qualification varchar (15), address varchar (15)) 
+Relationship between Book and Author is many to many. 
+Constraints: Primary Key,pub_name should not be null. 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1. Write a stored function to display the book details written by author . (Accept Author name 
+as input parameter). Raise an exception in case of invalid author name. 
+OR 
+1. Write a trigger after insert on book to display message “prize is so high” if book price is 
+more than 1000. 
+2. Write a procedure to display all even numbers from 1 to 50. 
+
+
 create table book10 (b_no int primary key,b_name varchar(20),pub_name varchar(20) not null,b_price float); 
 create table author10(a_no int primary key,a_name varchar(20),qualification varchar(20),address varchar(15)); 
 create table book_author10 (b_no int references book10(b_no),a_no int references author10(a_no)); 
@@ -1501,7 +1670,23 @@ $$;
 
 
  ----------------------------------------------------- SLIP  - 11 ------------------------------------------------------------------ 
-Q1]  
+Q1] Section II: Database Management Systems II      
+Consider the following Entities and their Relationships 
+Student (rollno, s_name , class)  
+Subject (scode , subject_name)  
+[15 Marks] 
+Relationship between Student and Subject is many to many with descriptive attribute marks. 
+Q2) Using above Database Solve the following  
+1. Write a stored function using cursor to calculate total marks of each student and 
+display it. 
+OR 
+[10 Marks] 
+1. Define a trigger before deleting a student record from student table. Raise a notice and 
+display message “student record is being deleted”. 
+2. Write a procedure to accept value of n and find sum and average of first n number. 
+
+
+
 create table stud11(rollno int primary key,s_name varchar(20),class varchar(20)); 
 create table sub11(scode int primary key,sub_name varchar(15)); 
 create table stud_sub11(rollno int references stud11(rollno),scode int references sub11(scode),marks int); 
@@ -1539,7 +1724,27 @@ call sum_avg(10);
 
 
  ----------------------------------------------------- SLIP  - 12 ------------------------------------------------------------------ 
-Q2]  
+Q2]  Section II: Database Management Systems II      
+[15 Marks] 
+Consider the following Project-Employee database maintained by a company which stores 
+the details of the projects assigned to the employees. 
+Following are the tables: 
+PROJECT (pno integer, p_name char (30), ptype char(20),duration integer) 
+EMPLOYEE (eno integer, e_name char (20), qualification char (15), joindate date)  
+The relationships are as follows: 
+PROJECT-EMPLOYEE:M-M Relationship, with descriptive attributes as start_date (date), 
+no_of_hours_worked (integer). 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1. Write a trigger before inserting into a project table to check duration should be always 
+greater than zero. Display appropriate message. 
+OR 
+1. Write a stored function to accept project name as input and print the names of 
+employees working on the project. Raise an exception for an invalid project name. 
+2. Write a procedure to accept value of m and n and display the total count of odd numbers      
+from m to n. 
+
+
 create or replace procedure cnt_odd ( m int , n int) language plpgsql as $$ 
 declare  
 i int; 
@@ -1558,7 +1763,31 @@ call cnt_odd(10,50);
 
 
  ----------------------------------------------------- SLIP  - 13 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II       
+[15 Marks] 
+Consider the following database of Bus transport system. Many buses run on one route. Drivers are 
+allotted to the buses shift-wise. 
+Following are the tables: 
+BUS (bus_no int , capacity int , depot_name varchar(20)) 
+ROUTE (route_no int, source char(20), destination char(20),no_of_stations int) 
+DRIVER (driver_no int , driver_name char(20), license_no int, address char(20), 
+d_age int , salary float) 
+The relationships are as follows: 
+BUS_ROUTE : M-1 
+BUS_DRIVER : M-M with descriptive attributes Date of duty allotted and Shift – it can 
+be 1 (Morning) 0r 2 ( Evening ). 
+Constraints: 1. License no is unique. 
+2. Bus capacity is not null. 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1. Define a trigger before insert the record of driver if the age is not between 18 and 50, raise 
+an error message “invalid entry”. 
+OR 
+1. Write a stored function to accept the bus_no and date and print its allotted drivers. 
+Raise an exception in case of invalid bus number. 
+2. Write a procedure to accept value of n and display all odd numbers from 1 to n. 
+
+
 create table route13(route_no int primary key,source varchar(20),dest varchar(20),no_of_stations int); 
 create table bus13(bus_no int primary key,capacity int,depot_name varchar(20),route_no int,foreign key(route_no) references route6(route_no)); 
 create table driver13(driver_no int primary key,d_name varchar(20),license_no int,address varchar(15),d_age int,salary float); 
@@ -1597,7 +1826,27 @@ select search_in_range(110,1,20);
 
 
  ------------------------------------------------------- SLIP  - 14 ------------------------------------------------------------------ 
-Q2]  
+Q2]  Section II: Database Management Systems-II      
+[15 Marks] 
+Consider the following Project-Employee database maintained by a company which stores 
+the details of the projects assigned to the employees. 
+Following are the tables: 
+PROJECT (pno integer, p_name char (30), ptype char(20),duration integer) 
+EMPLOYEE (eno integer, e_name char (20), qualification char (15), joindate date)  
+The relationships are as follows: 
+PROJECT-EMPLOYEE: M-M Relationship, with descriptive attributes as start_date (date), 
+no_of_hours_worked (integer). 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1. Write a trigger before inserting into a project table to check duration should be always 
+greater than zero. Display appropriate message. 
+OR 
+1. Write a stored function to accept project name as input and print the names of 
+employees working on the project. Raise an exception for an invalid project name. 
+2.  Write a procedure to insert the values in project table.
+
+
+
 create or replace function number_in_words(n int) returns text language plpgsql as $$ 
 declare 
 temp int := n; 
@@ -1630,7 +1879,24 @@ select number_in_words(789);
 
 
  ----------------------------------------------------- SLIP  - 15 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following Person–Area database 
+Person (pnumber integer, pname varchar (20), birthdate date, income money) 
+Area ( aname varchar (20), area-type varchar (5) ) 
+The relationships are as follows: 
+Person-Area: M-1 
+The attribute ‘area_type’ can have values either ‘urban’ or ‘rural’. 
+Q2) Using above Database Solve the following  
+[15 Marks] 
+[10 Marks] 
+1. Write a cursor to update the income of all people living in ‘Urban’ area by 10%. 
+OR 
+1. Write a trigger before insert the record of person if the person number is negative raise 
+the message    “Invalid Number”. 
+2. Write a procedure to display all odd numbers from 1 to 100.   
+
+
+
 create table area15(aname varchar(20) primary key,area_type varchar(5) check (area_type in ('urban','rural'))); 
 create table person15(pno int primary key,pname varchar(20),birthdate date,income money,aname varchar(20),foreign key(aname) references area2(aname)); 
 insert into area15 values ('nashik','urban'),('sinner','rural'),('pune','urban'); 
@@ -1667,7 +1933,22 @@ call odd_numbers();
 
 
  ----------------------------------------------------- SLIP  - 18 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following Item-Supplier database 
+Item(itemno integer, itemname varchar(20)) 
+Supplier(supplier_no integer, supplier_name varchar(20), city varchar(20)) 
+The relationship is as, 
+[15 Marks] 
+Item-Supplier: M-M relationship with rate(money) and quantity (integer) as descriptive attributes. 
+Q2) Using above Database Solve the following  
+1. Write a cursor to display the names of items whose rate is more than 500. 
+OR 
+[10 Marks] 
+1. Write a trigger before insert or update on rate field. If the rate is less than 50 then raise the 
+appropriate exception. 
+2. Write a procedure to accept three numbers and find the maximum number from it. 
+
+
 create table item18(itemno int primary key,itemname varchar(20)); 
 create table supplier18(supplier_no int primary key,supplier_name varchar(20), city varchar(15)); 
 create table item_supplier_18(itemno int references item18(itemno),supplier_no int references supplier18(supplier_no),rate int,quantity int); 
@@ -1692,7 +1973,22 @@ insert into item_supplier_18 values(2,101,45,100);
 
 
 ----------------------------------------------------- SLIP  - 20 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following Department-employee database. 
+Department (dno integer, dname varchar(20),city varchar(20)) 
+Employee (eno integer, ename varchar(20), salary money) 
+Department and Employee are related with a one to many relationships. 
+Q2) Using above Database Solve the following  
+[15 Marks] 
+[10 Marks] 
+1) Write a function to accept department name and display the maximum salary of an employee 
+in that department. 
+OR 
+1) Write a trigger before insert/update on an employee record. Raise exception if salary <0. 
+2) Write a procedure to accept a number and display multiplication table of a number
+
+
+
 create table dept20 (dno int primary key,dname varchar(15),city varchar(10)); 
 create table emp20 (eno int primary key, ename varchar(20),salary int,dno int references dept20(dno)); 
 insert into dept20 values(1,'sales','nashik'),(2,'HR','pune'); 
@@ -1714,7 +2010,20 @@ insert into emp20 values(104,'priya',-225,2);
 
 
  ----------------------------------------------------- SLIP  - 21 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following database 
+[15 Marks] 
+Doctor(d_no int, d_name varchar(30), specialization varchar(35), phone_no int, charges int) 
+Hospital(h_no int, h_name varchar(20), city varchar(10)) 
+Doctor and Hospital are related with many to one relationship. 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1) Write a function which will accept the name of the hospital and calculate the average charges 
+of doctors visiting that hospital. 
+OR 
+1) Write a trigger before insert/update on Doctor. Raise exception if charges are <0. 
+2) Write a procedure to insert the values in Doctor table.
+
 create table hos21(h_no int primary key,h_name varchar(20),city varchar(15)); 
 create table doc21(d_no int primary key,d_name varchar(20),specialization varchar(20),phone_no int, charges int,h_no int references hos21(h_no)); 
 insert into hos21 values(1,'lilavati hospital','mumbai'),(2,'samarth hospital','nashik'); 
@@ -1738,7 +2047,21 @@ insert into doc21 values(101,'dr.patil','dentist',0889448,-200,1);
 
 
 ----------------------------------------------------- SLIP  - 23 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following database 
+[15 Marks] 
+Car (c_no int, owner varchar(20), model varchr(10), color varchar(10) 
+Driver (driver_no int, driver_name varchar(20), license_no int, d_age int, salary float) 
+Car and Driver are related with many to many relationship 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1) Write a cursor which accepts the driver name and prints the details of all cars that this 
+driver has driven, if the driver name is invalid, print an appropriate message. 
+OR 
+1) Write a trigger before insert/update on Driver. Raise exception if driver age is < 21. 
+2) Write a procedure to find sum of first 100 numbers. 
+
+
 create table car23(c_no int primary key,owner varchar(20),model varchar(20),colour varchar(20)); 
 create table driver23(driver_no int primary key,driver_name varchar(10),license_no int,d_age int,salary float); 
 create table car_driver23(c_no int references car23(c_no), driver_no int references driver23(driver_no)); 
@@ -1763,7 +2086,23 @@ insert into driver23 values(104,'rohit',444,25,15000);
 
 
  ----------------------------------------------------- SLIP  - 24 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following Department-employee database. 
+Department (dno integer, dname varchar(20),city varchar(20)) 
+Employee (eno integer, ename varchar(20), salary money) 
+Department and Employee are related with a one to many relationship 
+Q2) Using above Database Solve the following  
+[15 Marks] 
+[10 Marks] 
+1) Write a function to accept department name as input and display employee name along 
+with salary of that department. 
+OR 
+1) Write a trigger after insert on an employee record. Display appropriate message when the 
+record is inserted. 
+2)  Write a stored procedure to accept value of n and display first n even numbers
+
+
+
 create table dept24 (dno int primary key,dname varchar(15),city varchar(10)); 
 create table emp24 (eno int primary key, ename varchar(20),salary int,dno int references dept24(dno)); 
 insert into dept24 values(1,'sales','nashik'),(2,'HR','pune'); 
@@ -1798,7 +2137,22 @@ call even_num_20();
 
 
  ----------------------------------------------------- SLIP  - 25 ------------------------------------------------------------------ 
-Q1]  
+Q1] Section II: Database Management Systems-II       
+Consider the following database 
+Customer (cno integer, cname varchar(20), city varchar(20)) 
+Account (a_no int, a_type varchar(10), opening_date date, balance money) 
+Customer and Account are related with one to many relationship 
+Q2) Using above Database Solve the following  
+[15 Marks] 
+[10 Marks] 
+1. Write a function using cursor which accepts city name as input and prints the details of all 
+customers in that city. 
+OR 
+1. Write a trigger which does not allow deletion of accounts of  --- type
+2.Write a procedure to display all customers from ‘Pune’ city.   
+
+
+
 create table cust25(cno int primary key,cname varchar(20),city varchar(10)); 
 create table acc25(a_no int primary key,a_type varchar(15),opening_date date,balance money,cno int references cust25(cno)); 
 insert into cust25 values(1,'amit','nashik'),(2,'neha','mumbai'),(3,'payal','pune'); 
@@ -1834,7 +2188,23 @@ call pune_cust();
 
 
  ----------------------------------------------------- SLIP  - 26 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following database : 
+Item (itemno integer, Itemname varchar(20), quantity integer) 
+Supplier(supplierno integer ,Supplier name varchar(20),city varchar(20)) 
+[15 Marks] 
+Item and supplier are related with many to many relationship. Rate is descriptive attribute. 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1) Write a stored function using cursors, to accept Item name from the user and display the 
+Rate and Supplier Name for that Item. 
+OR 
+2) Write a trigger before update on rate field. If the difference in the old rate and new rate is 
+more than Rs 2000, raise an exception and display the corresponding message. 
+3) Write a procedure to accept and display addition, subtraction, multiplication and division of 
+two numbers.      
+
+
 create table item26(itemno int primary key,itemname varchar(20),quantity int); 
 create table supplier26(supplier_no int primary key,supplier_name varchar(20), city varchar(15)); 
 create table item_supplier_26(itemno int references item18(itemno),supplier_no int references supplier18(supplier_no),rate int); 
@@ -1861,7 +2231,23 @@ where itemno = 1;
 
 
 ---------------------------------------------------- SLIP  - 27 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following database : 
+Student (rollno integer, name varchar(30),class varchar(10)) 
+Subject(Scode varchar(10),subject name varchar(20)) 
+[15 Marks] 
+Student and subject are related with M-M relationship with attributes marks_scored. 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1. Write a stored function using cursors, to accept class from the user and display the details of the 
+students of that class. 
+OR 
+1. Write a trigger before insert/update the marks_scored. Raise exception if Marks are 
+negative. 
+2. Write a procedure to accept and display addition, subtraction and division of two numbers. Handle 
+division by zero error for division operation. (Use raise). 
+
+
 create table stud27(rollno int primary key,s_name varchar(20),class varchar(20)); 
 create table sub27(scode int primary key,sub_name varchar(15)); 
 create table stud_sub27(rollno int references stud11(rollno),scode int references sub11(scode),marks int); 
@@ -1885,7 +2271,20 @@ insert into stud_sub27 values(2,101,-70);
 
 
 ----------------------------------------------------- SLIP  - 28 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems-II      
+[15 Marks] 
+Consider the following database : 
+Company (Name varchar(30),address (50),city varchar(20), share_value money) 
+Person (pname varchar(30),pcity varchar (20)) 
+Company and Person are related with M to M relationship with descriptive attribute No_of_shares 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1) Write a stored function to update the share_values by 20% for Person “ ”. 
+OR 
+1) Write a trigger before deleting company record. Display appropriate message to the user. 
+2) Write a procedure to insert the values in person table. 
+
+
 create table comp28(name varchar(20) primary key,address varchar(25),city varchar(20),share_value money); 
 create table person28 (pname varchar(20) primary key,pcity varchar(20)); 
 create table comp_person28(name varchar(20) references comp28(name),pname varchar(20) references person28(pname),no_of_shares int); 
@@ -1908,7 +2307,23 @@ delete from comp28 where name = 'TCS';
 
 
  ----------------------------------------------------- SLIP  - 29 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II       
+Consider the following database 
+Person (pno int, pname varchar (20), birthdate date, income money) 
+Area (aid int,aname varchar (20), area_type varchar (5) ) 
+[15 Marks] 
+The person and area related to many to one relationship. The attribute ‘area_type’ can 
+have values either ‘urban’ or ‘rural’. 
+Q2) Using above Database Solve the following  
+1) Write a cursor to display the names of persons living in urban area. 
+OR 
+[10 Marks] 
+1) Write a trigger before deleting a person's record from the person's table. Raise a notice and display 
+the message “person record is being deleted”. 
+2) Write a procedure to accept three numbers from user and display maximum and minimum of 
+three numbers.     
+
+
 create table area29(aid int primary key,aname varchar(20),area_type varchar(5) check (area_type in ('urban','rural'))); 
 create table person29(pno int primary key,pname varchar(20),birthdate date,income money,aid int,foreign key(aid) references area29(aid)); 
 insert into area29 values (1,'nashik','urban'),(2,'sinner','rural'),(3,'pune','urban'); 
@@ -1931,7 +2346,22 @@ delete from person29 where pno = 101;
 
 
  ----------------------------------------------------- SLIP  - 30 ------------------------------------------------------------------ 
-Q1]  
+Q1]  Section II: Database Management Systems II      
+Consider the following database 
+Student (Roll_No int, Sname varchar (20), Sclass char (10)) 
+Teacher (T_No int, Tname char (20), Experience int) 
+[15 Marks] 
+Student and Teacher are related with many to many relationship with the descriptive attribute 
+Subject. 
+Q2) Using above Database Solve the following  
+[10 Marks] 
+1) Write a stored function to count the number of teachers having experience > 10 years 
+OR 
+1) Write a trigger before insert the record of the student in the Student table. If the Roll_No is less 
+than or equal to zero then the trigger gets fired and displays the message “Invalid Roll Number”. 
+2) Write a procedure to accept value of n from user and find sum and average of first n 
+numbers.      
+
 create table stud30(rollno int primary key,sname varchar(20),sclass varchar(10)); 
 create table tea30(t_no int primary key,tname varchar(20),experience int); 
 create table stud_sub30(rollno int references stud30(rollno),t_no int references tea30(t_no),subject varchar(15)); 
